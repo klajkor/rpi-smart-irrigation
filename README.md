@@ -1,1 +1,2 @@
-# rpi-smart-irrigation
+# Raspberry Pi-based smart irrigation
+tbd
