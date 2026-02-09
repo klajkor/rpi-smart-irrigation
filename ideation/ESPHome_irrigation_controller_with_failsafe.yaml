@@ -1,0 +1,38 @@
+esphome:
+  name: irrigation_controller_1
+
+esp32:
+  board: esp32dev
+
+# Connect to your Pi's MQTT Broker
+mqtt:
+  broker: 192.168.1.XX # Replace with your Pi's static IP
+  topic_prefix: garden/zone1
+
+switch:
+  - platform: gpio
+    pin: 21
+    id: relay_1
+    name: "Garden Zone 1"
+    icon: "mdi:water"
+    # SAFETY 1: Ensure valve is closed on boot/power restore
+    restore_mode: ALWAYS_OFF 
+    
+    # SAFETY 2: The Watchdog logic
+    on_turn_on:
+      - delay: 20min
+      - switch.turn_off: relay_1
+    
+    # MQTT Topics for Node-RED
+    state_topic: "garden/zone1/status"
+    command_topic: "garden/zone1/command"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+# Optional: Physical button on the box for manual override
+binary_sensor:
+  - platform: gpio
+    pin: 4
+    name: "Manual Button"
+    on_press:
+      - switch.toggle: relay_1
