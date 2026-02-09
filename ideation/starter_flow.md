@@ -40,4 +40,3 @@ Since you already have the Pi and ESP32s, here is exactly what else you need to 
 1. **Fixed IP Addresses:** Log into your router and assign a static IP to your Raspberry Pi. If the Pi's IP changes, your ESP32s won't be able to find the MQTT broker.
 2. **The "Watchdog" Logic:** Inside the ESP32 code (ESPHome), add a `delayed_off` filter. This ensures that even if the Pi crashes or the Wi-Fi drops while the water is running, the ESP32 will automatically shut the valve off after 20 minutes as a safety backup.
 
-**Would you like me to refine the ESPHome YAML code to include that "safety watchdog" so your garden doesn't accidentally turn into a lake?**
